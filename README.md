@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shahd — Portfolio
 
-## Getting Started
+A mass-communication portfolio for video reports & documentaries, written articles/blogs, and photo stories. Built with Next.js + Tailwind, with content managed in a free Sanity CMS dashboard.
 
-First, run the development server:
+- **Framework:** Next.js (App Router) + TypeScript + Tailwind CSS v4
+- **CMS:** Sanity (admin dashboard embedded at `/studio`)
+- **Video:** YouTube / Vimeo links are embedded automatically
+- **Hosting:** Vercel (free)
+
+---
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> **Demo mode:** Until a Sanity project is connected, the site automatically uses
+> built-in sample content (`lib/sampleData.ts`) so you can see it fully working.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Connecting the CMS (one-time setup)
 
-To learn more about Next.js, take a look at the following resources:
+1. Create a free account at [sanity.io](https://www.sanity.io/) and make a new project (dataset name: `production`).
+2. In the project's API settings on sanity.io/manage, add `http://localhost:3000` and your live URL to **CORS origins**.
+3. Copy `.env.local.example` to `.env.local` and fill in `NEXT_PUBLIC_SANITY_PROJECT_ID`.
+4. Restart `npm run dev`. The site now reads live content, and the sample data is no longer used.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The admin dashboard lives at **http://localhost:3000/studio** (and `/studio` on the live site).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## How Shahd adds her work
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Go to `/studio` and sign in. From the sidebar:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Videos** — add a title and paste the YouTube/Vimeo link. The player and thumbnail appear automatically.
+- **Articles / blogs** — write with headings, images, and quotes in the rich editor.
+- **Photo stories** — upload a set of photos with captions; they show as a gallery with a lightbox.
+- **Categories** — reusable topics (e.g. News reports, Documentary) used by the filters.
+- **Profile / about** — name, bio, photo, CV (PDF), email, and social links.
+
+Tick **"Feature on the homepage"** on any item to surface it in the featured row. New work appears on the site within ~60 seconds.
+
+---
+
+## Project structure
+
+```
+app/(site)/        Public pages (home, /work, /video, /writing, /photo, /about)
+app/studio/        Embedded Sanity admin dashboard
+components/        Nav, Footer, WorkCard, WorkGrid, VideoEmbed, Gallery, PortableBody
+lib/               Types, data fetching (content.ts), sample data, helpers
+sanity/            CMS client, schemas, queries, Studio config
+```
+
+---
+
+## Deploying to Vercel
+
+1. Push this repo to GitHub.
+2. Import it at [vercel.com](https://vercel.com); add the same env vars from `.env.local`.
+3. Deploy. Add a custom domain later from the Vercel dashboard if desired.
