@@ -12,19 +12,26 @@ const links = [
   { href: "/about", label: "About" },
 ];
 
-export default function Nav({ name }: { name: string }) {
+export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
         <Link
           href="/"
-          className="font-serif text-xl tracking-tight"
+          className="font-bold leading-none text-accent"
+          style={{
+            fontFamily: "var(--font-modernline), cursive",
+            WebkitTextStroke: "0.8px currentColor",
+            fontSize: "22px",
+          }}
           onClick={() => setOpen(false)}
         >
-          {name} <span className="text-muted">/ portfolio</span>
+          <span style={{ display: "inline-block" }}>S</span>
+          <span style={{ display: "inline-block", marginLeft: "-0.42em" }}>H</span>
+          <span style={{ display: "inline-block", marginLeft: "-0.15em" }}>R.</span>
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">

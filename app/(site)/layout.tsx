@@ -10,7 +10,7 @@ export default async function SiteLayout({
   const profile = await getProfile();
   return (
     <div className="flex min-h-screen flex-col">
-      <Nav name={profile.name} />
+      <Nav />
       <main className="flex-1">{children}</main>
       <Footer profile={profile} />
     </div>
