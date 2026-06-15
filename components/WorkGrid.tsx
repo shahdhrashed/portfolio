@@ -36,8 +36,8 @@ export default function WorkGrid({
   const chip = (active: boolean) =>
     `rounded-full px-4 py-1.5 text-sm transition-colors ${
       active
-        ? "bg-ink text-paper"
-        : "border border-line text-muted hover:border-ink hover:text-ink"
+        ? "bg-accent text-paper"
+        : "border border-accent text-accent hover:bg-accent hover:text-paper"
     }`;
 
   return (

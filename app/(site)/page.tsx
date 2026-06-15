@@ -18,13 +18,13 @@ export default async function HomePage() {
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
             href="/work"
-            className="rounded-full bg-ink px-6 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent"
+            className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent-dark"
           >
             View all work
           </Link>
           <Link
             href="/about"
-            className="rounded-full border border-line px-6 py-2.5 text-sm font-medium transition-colors hover:border-ink"
+            className="rounded-full border border-accent px-6 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-paper"
           >
             About me
           </Link>

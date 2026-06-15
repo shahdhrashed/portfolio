@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #faf8f3;
-  --color-paper-dim: #f1ede4;
-  --color-ink: #1c1b19;
-  --color-muted: #6f6b63;
-  --color-line: #e3ddd1;
-  --color-accent: #b5532b;
-  --color-accent-dark: #8f3f1f;
+  --color-paper: #fff8b6;
+  --color-paper-dim: #f6ec9b;
+  --color-ink: #221a06;
+  --color-muted: #6b6033;
+  --color-line: #e7d98a;
+  --color-accent: #c8154b;
+  --color-accent-dark: #9e1038;
 
   --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -27,6 +27,13 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* All titles use the secondary brand color */
+h1,
+h2,
+h3 {
+  color: var(--color-accent);
 }
 
 /* Eyebrow / label styling reused across cards and sections */
