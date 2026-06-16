@@ -13,6 +13,8 @@ export default async function SiteLayout({
       <Nav />
       <main className="flex-1">{children}</main>
       <Footer profile={profile} />
+      {/* Spacer so the floating bottom dock never overlaps footer content */}
+      <div aria-hidden className="h-24" />
     </div>
   );
 }

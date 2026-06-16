@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Profile } from "@/lib/types";
 
 const platformLabels: Record<string, string> = {
@@ -44,9 +43,6 @@ export default function Footer({ profile }: { profile: Profile }) {
       <div className="border-t border-line">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 text-xs text-muted sm:px-8">
           <span>© {year} {profile.name}. All rights reserved.</span>
-          <Link href="/admin" className="hover:text-accent">
-            Manage content
-          </Link>
         </div>
       </div>
     </footer>

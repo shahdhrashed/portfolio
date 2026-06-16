@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const cormorant = localFont({
+  src: [
+    { path: "./fonts/CormorantGaramond-Variable.ttf", weight: "100 700", style: "normal" },
+    { path: "./fonts/CormorantGaramond-Italic-Variable.ttf", weight: "100 700", style: "italic" },
+  ],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -45,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} ${modernline.variable}`}
+      className={`${cormorant.variable} ${inter.variable} ${modernline.variable}`}
     >
       <body>{children}</body>
     </html>
