@@ -1,5 +1,3 @@
-import type { PortableTextBlock } from "@portabletext/react";
-
 export type WorkType = "video" | "article" | "photo";
 
 export interface SanityImage {
@@ -38,7 +36,7 @@ export interface VideoWork extends WorkBase {
 
 export interface Article extends WorkBase {
   type: "article";
-  body?: PortableTextBlock[];
+  bodyHtml?: string;
 }
 
 export interface PhotoStory extends WorkBase {
@@ -57,7 +55,7 @@ export interface SocialLink {
 export interface Profile {
   name: string;
   headline: string;
-  bio?: PortableTextBlock[] | string;
+  bioHtml?: string;
   shortBio?: string;
   headshot?: SanityImage;
   email?: string;

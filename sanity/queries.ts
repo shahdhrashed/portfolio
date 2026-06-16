@@ -4,7 +4,11 @@ const categoryProjection = `category->{ title, "slug": slug.current }`;
 
 const cardFields = `
   _id,
-  "type": _type,
+  "type": select(
+    _type == "videoWork" => "video",
+    _type == "article" => "article",
+    _type == "photoStory" => "photo"
+  ),
   title,
   "slug": slug.current,
   excerpt,
@@ -22,13 +26,15 @@ const coverFallback = `
 export const allWorkQuery = groq`
 *[_type in ["videoWork", "article", "photoStory"]] | order(date desc) {
   ${cardFields},
-  ${coverFallback}
+  ${coverFallback},
+  videoUrl
 }`;
 
 export const featuredWorkQuery = groq`
 *[_type in ["videoWork", "article", "photoStory"] && featured == true] | order(date desc) {
   ${cardFields},
-  ${coverFallback}
+  ${coverFallback},
+  videoUrl
 }`;
 
 export const categoriesQuery = groq`
@@ -45,7 +51,7 @@ export const videoBySlugQuery = groq`
 export const articleBySlugQuery = groq`
 *[_type == "article" && slug.current == $slug][0] {
   ${cardFields},
-  body
+  bodyHtml
 }`;
 
 export const photoBySlugQuery = groq`
@@ -64,9 +70,9 @@ export const profileQuery = groq`
   name,
   headline,
   shortBio,
-  bio,
+  bioHtml,
   headshot,
   email,
-  "cvUrl": cv.asset->url,
+  cvUrl,
   socials
 }`;

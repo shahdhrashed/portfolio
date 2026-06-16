@@ -87,43 +87,8 @@ const articles: Article[] = [
     date: "2026-04-21",
     featured: true,
     coverImage: img("radio"),
-    body: [
-      {
-        _type: "block",
-        _key: "b1",
-        style: "normal",
-        children: [
-          {
-            _type: "span",
-            _key: "s1",
-            text: "When the last music shop on the high street closed, everyone assumed local radio would follow. It didn't. Across the region, small stations are reporting their highest listener numbers in years.",
-            marks: [],
-          },
-        ],
-        markDefs: [],
-      },
-      {
-        _type: "block",
-        _key: "b2",
-        style: "h2",
-        children: [{ _type: "span", _key: "s2", text: "The trust dividend", marks: [] }],
-        markDefs: [],
-      },
-      {
-        _type: "block",
-        _key: "b3",
-        style: "normal",
-        children: [
-          {
-            _type: "span",
-            _key: "s3",
-            text: "In an era of algorithmic feeds, a familiar human voice reading the morning headlines turns out to be a feature, not a relic.",
-            marks: [],
-          },
-        ],
-        markDefs: [],
-      },
-    ],
+    bodyHtml:
+      "<p>When the last music shop on the high street closed, everyone assumed local radio would follow. It didn't. Across the region, small stations are reporting their highest listener numbers in years.</p><h2>The trust dividend</h2><p>In an era of algorithmic feeds, a familiar human voice reading the morning headlines turns out to be a feature, not a relic.</p>",
   },
   {
     _id: "a2",
@@ -135,22 +100,8 @@ const articles: Article[] = [
     date: "2026-02-09",
     featured: false,
     coverImage: img("border"),
-    body: [
-      {
-        _type: "block",
-        _key: "b1",
-        style: "normal",
-        children: [
-          {
-            _type: "span",
-            _key: "s1",
-            text: "The first thing nobody tells you about reporting from a border crossing is how much of the job is simply waiting, and watching, and earning the right to ask a question.",
-            marks: [],
-          },
-        ],
-        markDefs: [],
-      },
-    ],
+    bodyHtml:
+      "<p>The first thing nobody tells you about reporting from a border crossing is how much of the job is simply waiting, and watching, and earning the right to ask a question.</p>",
   },
 ];
 
@@ -202,7 +153,8 @@ export const sampleProfile: Profile = {
   headline: "Mass communication · journalism & media",
   shortBio:
     "I'm a mass communication student telling stories in video, words, and image — from field reports and documentaries to long-form writing and photojournalism.",
-  bio: "I'm a mass communication student focused on journalism and media production. My work spans video reporting, documentary, written features, and photojournalism. This site is a living archive of what I make — the published pieces, the experiments, and everything in between.",
+  bioHtml:
+    "<p>I'm a mass communication student focused on journalism and media production. My work spans video reporting, documentary, written features, and photojournalism.</p><p>This site is a living archive of what I make — the published pieces, the experiments, and everything in between.</p>",
   headshot: img("portrait", 600, 600),
   email: "hello@example.com",
   cvUrl: undefined,

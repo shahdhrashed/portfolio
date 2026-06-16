@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle, getSlugs, getRelated } from "@/lib/content";
-import PortableBody from "@/components/PortableBody";
+import HtmlBody from "@/components/HtmlBody";
 import RelatedWork from "@/components/RelatedWork";
 import { imageUrl } from "@/sanity/image";
 import { formatDate } from "@/lib/format";
@@ -66,8 +66,8 @@ export default async function ArticlePage({
       )}
 
       <div className="mx-auto mt-10 max-w-2xl px-5 sm:px-8">
-        {article.body ? (
-          <PortableBody value={article.body} />
+        {article.bodyHtml ? (
+          <HtmlBody html={article.bodyHtml} />
         ) : (
           <p className="text-muted">This article has no content yet.</p>
         )}

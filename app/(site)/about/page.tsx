@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getProfile } from "@/lib/content";
-import PortableBody from "@/components/PortableBody";
+import HtmlBody from "@/components/HtmlBody";
 import { imageUrl } from "@/sanity/image";
-import type { PortableTextBlock } from "@portabletext/react";
 
 export const metadata: Metadata = {
   title: "About",
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const profile = await getProfile();
   const headshot = imageUrl(profile.headshot, { width: 700 });
-  const bioIsBlocks = Array.isArray(profile.bio);
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8">
@@ -65,10 +63,10 @@ export default async function AboutPage() {
           <p className="eyebrow text-accent">{profile.headline}</p>
           <h1 className="mt-3 font-serif text-4xl sm:text-5xl">{profile.name}</h1>
           <div className="mt-6">
-            {bioIsBlocks ? (
-              <PortableBody value={profile.bio as PortableTextBlock[]} />
+            {profile.bioHtml ? (
+              <HtmlBody html={profile.bioHtml} />
             ) : (
-              <p className="prose-body">{(profile.bio as string) || profile.shortBio}</p>
+              <p className="prose-body">{profile.shortBio}</p>
             )}
           </div>
         </div>
