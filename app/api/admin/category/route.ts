@@ -15,11 +15,18 @@ export async function POST(req: Request) {
   if (!title) {
     return NextResponse.json({ error: "Title required." }, { status: 400 });
   }
-  const result = await writeClient.create({
-    _type: "category",
-    title,
-    slug: { _type: "slug", current: slugify(title) },
-  });
+  let result;
+  try {
+    result = await writeClient.create({
+      _type: "category",
+      title,
+      slug: { _type: "slug", current: slugify(title) },
+    });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[admin/category] Sanity write failed:", msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
   revalidatePath("/work");
   return NextResponse.json({ ok: true, id: result._id });
 }

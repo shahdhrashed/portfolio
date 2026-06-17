@@ -28,18 +28,24 @@ export async function POST(req: Request) {
       url: s.url,
     }));
 
-  await writeClient.createOrReplace({
-    _id: "profile",
-    _type: "profile",
-    name: data.name || "Shahd",
-    headline: data.headline || undefined,
-    shortBio: data.shortBio || undefined,
-    bioHtml: data.bioHtml || undefined,
-    email: data.email || undefined,
-    cvUrl: data.cvUrl || undefined,
-    headshot,
-    socials,
-  });
+  try {
+    await writeClient.createOrReplace({
+      _id: "profile",
+      _type: "profile",
+      name: data.name || "Shahd",
+      headline: data.headline || undefined,
+      shortBio: data.shortBio || undefined,
+      bioHtml: data.bioHtml || undefined,
+      email: data.email || undefined,
+      cvUrl: data.cvUrl || undefined,
+      headshot,
+      socials,
+    });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[admin/profile] Sanity write failed:", msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
 
   revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });

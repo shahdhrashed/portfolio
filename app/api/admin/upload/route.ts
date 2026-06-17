@@ -20,10 +20,17 @@ export async function POST(req: Request) {
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const asset = await writeClient.assets.upload("image", buffer, {
-    filename: file.name,
-    contentType: file.type,
-  });
+  let asset;
+  try {
+    asset = await writeClient.assets.upload("image", buffer, {
+      filename: file.name,
+      contentType: file.type,
+    });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[admin/upload] Sanity upload failed:", msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
 
   return NextResponse.json({
     assetId: asset._id,
