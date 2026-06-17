@@ -83,7 +83,7 @@ h6 {
   font-family: var(--font-serif);
   font-size: 1.1875rem;
   line-height: 1.75;
-  color: #2a2824;
+  color: var(--color-ink);
 }
 .prose-body p {
   margin: 0 0 1.4rem;
