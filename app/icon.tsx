@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFileSync } from "fs";
 import { join } from "path";
 
-export const size = { width: 32, height: 32 };
+export const size = { width: 16, height: 16 };
 export const contentType = "image/png";
 
 export default async function Icon() {
