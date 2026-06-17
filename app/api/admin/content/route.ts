@@ -73,10 +73,16 @@ export async function POST(req: Request) {
   }
 
   let result;
-  if (data._id) {
-    result = await writeClient.createOrReplace({ ...base, _id: data._id as string });
-  } else {
-    result = await writeClient.create(base);
+  try {
+    if (data._id) {
+      result = await writeClient.createOrReplace({ ...base, _id: data._id as string });
+    } else {
+      result = await writeClient.create(base);
+    }
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[admin/content] Sanity write failed:", msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
   }
 
   revalidatePath("/");
