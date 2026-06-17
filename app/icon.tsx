@@ -26,7 +26,7 @@ export default async function Icon() {
           <span
             style={{
               fontFamily: "Modernline",
-              fontSize: 19,
+              fontSize: 14,
               fontWeight: 700,
               color: "#c8154b",
             }}
@@ -36,7 +36,7 @@ export default async function Icon() {
           <span
             style={{
               fontFamily: "Modernline",
-              fontSize: 19,
+              fontSize: 14,
               fontWeight: 700,
               color: "#c8154b",
               marginLeft: "-0.42em",
@@ -47,7 +47,7 @@ export default async function Icon() {
           <span
             style={{
               fontFamily: "Modernline",
-              fontSize: 19,
+              fontSize: 14,
               fontWeight: 700,
               color: "#c8154b",
               marginLeft: "-0.15em",
