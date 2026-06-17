@@ -90,16 +90,18 @@ h6 {
 }
 .prose-body h2 {
   font-family: var(--font-serif);
-  font-size: 1.75rem;
-  line-height: 1.25;
+  font-size: 2rem;
+  line-height: 1.2;
   margin: 2.4rem 0 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-accent);
 }
 .prose-body h3 {
   font-family: var(--font-serif);
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   margin: 2rem 0 0.75rem;
   font-weight: 600;
+  color: var(--color-accent);
 }
 .prose-body blockquote {
   border-left: 3px solid var(--color-accent);
