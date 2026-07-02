@@ -74,13 +74,13 @@ export default function CategoryManager({ categories }: { categories: Category[]
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") saveEdit(c._id);
+                    if (e.key === "Enter") saveEdit(c._id!);
                     if (e.key === "Escape") cancelEdit();
                   }}
                   className="rounded-full border border-accent bg-white px-3 py-1 text-sm outline-none"
                 />
                 <button
-                  onClick={() => saveEdit(c._id)}
+                  onClick={() => saveEdit(c._id!)}
                   disabled={busy}
                   className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-paper hover:bg-accent-dark disabled:opacity-60"
                 >
