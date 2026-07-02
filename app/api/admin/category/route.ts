@@ -30,3 +30,27 @@ export async function POST(req: Request) {
   revalidatePath("/work");
   return NextResponse.json({ ok: true, id: result._id });
 }
+
+export async function PATCH(req: Request) {
+  if (!(await isAuthed())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!hasWriteToken) {
+    return NextResponse.json({ error: "Missing token." }, { status: 503 });
+  }
+  const { _id, title } = await req.json();
+  if (!_id || !title) {
+    return NextResponse.json({ error: "_id and title required." }, { status: 400 });
+  }
+  try {
+    await writeClient
+      .patch(_id)
+      .set({ title, slug: { _type: "slug", current: slugify(title) } })
+      .commit();
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
+  revalidatePath("/work");
+  return NextResponse.json({ ok: true });
+}
