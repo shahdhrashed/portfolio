@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { motion } from "framer-motion";
 
 type IconProps = { className?: string };
 
@@ -76,46 +77,81 @@ const links: {
   { href: "/about", label: "About", Icon: UserIcon, isActive: (p) => p === "/about" },
 ];
 
-function Dock() {
+const PILL_SPRING = { type: "spring", stiffness: 500, damping: 40, mass: 0.8 } as const;
+
+function DockLinks() {
   const pathname = usePathname();
   const type = useSearchParams().get("type");
 
   return (
+    <>
+      {links.map(({ href, label, Icon, isActive }) => {
+        const active = isActive(pathname, type);
+        return (
+          <Link
+            key={label}
+            href={href}
+            aria-label={label}
+            aria-current={active ? "page" : undefined}
+            className={`group relative flex items-center rounded-full py-2.5 transition-[color] duration-200 ${
+              active ? "px-4 text-paper" : "px-3 text-muted hover:text-accent"
+            }`}
+          >
+            {active && (
+              <motion.div
+                layoutId="dock-pill"
+                className="absolute inset-0 rounded-full bg-accent shadow-sm"
+                transition={PILL_SPRING}
+              />
+            )}
+            <Icon
+              key={`${label}-${active}`}
+              className={`relative z-10 h-5 w-5 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110 ${
+                active ? "icon-pop" : ""
+              }`}
+            />
+            <span
+              className={`relative z-10 overflow-hidden whitespace-nowrap text-[11px] font-semibold leading-none tracking-wide transition-opacity duration-200 ${
+                active ? "ml-1.5 max-w-[90px] opacity-100" : "ml-0 max-w-0 opacity-0"
+              }`}
+            >
+              {label}
+            </span>
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+function DockLinksFallback() {
+  return (
+    <>
+      {links.map(({ href, label, Icon }) => (
+        <Link
+          key={label}
+          href={href}
+          aria-label={label}
+          className="group flex items-center rounded-full px-3 py-2.5 text-muted"
+        >
+          <Icon className="h-5 w-5 shrink-0" />
+          <span className="ml-0 max-w-0 overflow-hidden opacity-0" />
+        </Link>
+      ))}
+    </>
+  );
+}
+
+function Dock() {
+  return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
       <nav
         aria-label="Primary"
-        className="dock-rise pointer-events-auto flex items-center gap-1 rounded-full border border-white/50 bg-paper/55 px-2 py-2 shadow-[0_10px_34px_-8px_rgba(34,26,6,0.45)] backdrop-blur-xl backdrop-saturate-150"
+        className="dock-rise pointer-events-auto will-change-transform flex items-center gap-1 rounded-full border border-white/50 bg-paper/55 px-2 py-2 shadow-[0_10px_34px_-8px_rgba(34,26,6,0.45)] backdrop-blur-xl backdrop-saturate-150"
       >
-        {links.map(({ href, label, Icon, isActive }) => {
-          const active = isActive(pathname, type);
-          return (
-            <Link
-              key={label}
-              href={href}
-              aria-label={label}
-              aria-current={active ? "page" : undefined}
-              className={`group flex items-center rounded-full py-2.5 transition-[padding,background-color,color] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-                active
-                  ? "bg-accent px-4 text-paper shadow-sm"
-                  : "px-3 text-muted hover:text-accent"
-              }`}
-            >
-              <Icon
-                key={`${label}-${active}`}
-                className={`h-5 w-5 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110 ${
-                  active ? "icon-pop" : ""
-                }`}
-              />
-              <span
-                className={`overflow-hidden whitespace-nowrap text-[11px] font-semibold leading-none tracking-wide transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-                  active ? "ml-1.5 max-w-[90px] opacity-100" : "ml-0 max-w-0 opacity-0"
-                }`}
-              >
-                {label}
-              </span>
-            </Link>
-          );
-        })}
+        <Suspense fallback={<DockLinksFallback />}>
+          <DockLinks />
+        </Suspense>
       </nav>
     </div>
   );
@@ -142,9 +178,7 @@ export default function Nav() {
         </div>
       </header>
 
-      <Suspense fallback={null}>
-        <Dock />
-      </Suspense>
+      <Dock />
     </>
   );
 }

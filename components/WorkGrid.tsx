@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { WorkItem, Category, WorkType } from "@/lib/types";
 import WorkCard from "./WorkCard";
 
@@ -22,16 +23,16 @@ export default function WorkGrid({
   categories: Category[];
   initialType?: TypeFilter;
 }) {
-  const [type, setType] = useState<TypeFilter>(initialType);
+  const router = useRouter();
   const [category, setCategory] = useState<string | "all">("all");
 
   const filtered = useMemo(() => {
     return items.filter((it) => {
-      if (type !== "all" && it.type !== type) return false;
+      if (initialType !== "all" && it.type !== initialType) return false;
       if (category !== "all" && it.category?.slug !== category) return false;
       return true;
     });
-  }, [items, type, category]);
+  }, [items, initialType, category]);
 
   const chip = (active: boolean) =>
     `rounded-full px-4 py-1.5 text-sm transition-colors ${
@@ -40,11 +41,16 @@ export default function WorkGrid({
         : "border border-accent text-accent hover:bg-accent hover:text-paper"
     }`;
 
+  function handleTypeClick(value: TypeFilter) {
+    setCategory("all");
+    router.push(value === "all" ? "/work" : `/work?type=${value}`);
+  }
+
   return (
     <div>
       <div className="flex flex-wrap gap-2">
         {typeFilters.map((f) => (
-          <button key={f.value} className={chip(type === f.value)} onClick={() => setType(f.value)}>
+          <button key={f.value} className={chip(initialType === f.value)} onClick={() => handleTypeClick(f.value)}>
             {f.label}
           </button>
         ))}
