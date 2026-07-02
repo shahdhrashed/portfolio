@@ -12,6 +12,7 @@
   --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-script: var(--font-modernline), cursive;
+  --font-display: var(--font-shick), Georgia, serif;
 }
 
 :root {
@@ -30,15 +31,16 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* All titles use the secondary brand color, bold weight */
+/* All titles use the display font */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
+  font-family: var(--font-display);
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* Bottom dock animations */

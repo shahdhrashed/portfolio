@@ -4,7 +4,8 @@ import { videoWork } from "./videoWork";
 import { article } from "./article";
 import { photoStory } from "./photoStory";
 import { profile } from "./profile";
+import { message } from "./message";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [videoWork, article, photoStory, category, profile],
+  types: [videoWork, article, photoStory, category, profile, message],
 };

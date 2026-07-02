@@ -27,6 +27,12 @@ const modernline = localFont({
   display: "swap",
 });
 
+const shick = localFont({
+  src: [{ path: "./fonts/shick.ttf", weight: "400", style: "normal" }],
+  variable: "--font-shick",
+  display: "swap",
+});
+
 const siteName = "Shahd — Portfolio";
 const siteDescription =
   "A mass communication portfolio: video reports, documentaries, written features, and photojournalism.";
@@ -48,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} ${modernline.variable}`}
+      className={`${cormorant.variable} ${inter.variable} ${modernline.variable} ${shick.variable}`}
     >
       <body>{children}</body>
     </html>

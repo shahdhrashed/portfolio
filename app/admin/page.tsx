@@ -56,6 +56,7 @@ export default async function AdminDashboard() {
           <NewButton href="/admin/photo/new" label="+ Add photo story" />
           <NewButton href="/admin/profile" label="Edit profile" subtle />
           <NewButton href="/admin/categories" label="Categories" subtle />
+          <NewButton href="/admin/messages" label="Messages" subtle />
         </div>
       </section>
 
