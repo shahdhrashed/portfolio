@@ -58,7 +58,7 @@ export default function WorkCard({ item }: { item: WorkItem }) {
         <span className="eyebrow text-accent">
           {item.category?.title ?? typeLabels[item.type]}
         </span>
-        <h3 className="mt-1.5 font-serif text-lg leading-snug transition-colors group-hover:text-accent-dark">
+        <h3 className="mt-1.5 font-serif text-xl leading-snug transition-colors group-hover:text-accent-dark">
           {item.title}
         </h3>
         {item.excerpt && (
