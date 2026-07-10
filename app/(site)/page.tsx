@@ -10,7 +10,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-5 pt-16 pb-12 sm:px-8 sm:pt-24">
         <p className="eyebrow text-accent">{profile.headline}</p>
         <h1 className="mt-4 max-w-3xl font-serif text-4xl leading-[1.08] sm:text-6xl">
-          Stories told in video, words, and image.
+          Where every idea finds its visual language.
         </h1>
         {profile.shortBio && (
           <p className="mt-6 max-w-xl text-lg text-muted">{profile.shortBio}</p>

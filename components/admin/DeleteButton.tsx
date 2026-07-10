@@ -14,7 +14,8 @@ export default function DeleteButton({ id, title }: { id: string; title: string 
     if (res.ok) {
       router.refresh();
     } else {
-      alert("Could not delete. Please try again.");
+      const data = await res.json().catch(() => ({ error: "Could not delete. Please try again." }));
+      alert(data.error || "Could not delete. Please try again.");
       setBusy(false);
     }
   }

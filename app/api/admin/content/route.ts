@@ -88,6 +88,7 @@ export async function POST(req: Request) {
   revalidatePath("/");
   revalidatePath("/work");
   revalidatePath(`/${sectionOf[type]}/${slug}`);
+  revalidatePath("/admin");
 
   return NextResponse.json({ ok: true, id: result._id, slug });
 }

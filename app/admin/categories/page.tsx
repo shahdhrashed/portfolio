@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAuthed } from "@/lib/admin/auth";
-import { getCategories } from "@/lib/content";
+import { getCategoriesFresh } from "@/lib/admin/read";
 import CategoryManager from "@/components/admin/CategoryManager";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminCategoriesPage() {
   if (!(await isAuthed())) redirect("/admin/login");
-  const categories = await getCategories();
+  const categories = await getCategoriesFresh();
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-10 sm:px-8">

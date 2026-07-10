@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: msg }, { status: 502 });
   }
   revalidatePath("/work");
+  revalidatePath("/admin/categories");
   return NextResponse.json({ ok: true, id: result._id });
 }
 
@@ -52,5 +53,6 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: msg }, { status: 502 });
   }
   revalidatePath("/work");
+  revalidatePath("/admin/categories");
   return NextResponse.json({ ok: true });
 }

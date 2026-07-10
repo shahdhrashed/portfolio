@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAuthed } from "@/lib/admin/auth";
-import { client } from "@/sanity/client";
+import { writeClient as client } from "@/sanity/writeClient";
+import { isSanityConfigured } from "@/sanity/env";
 import { formatDate } from "@/lib/format";
 import LogoutButton from "@/components/admin/LogoutButton";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -20,9 +22,11 @@ interface Message {
 export default async function MessagesPage() {
   if (!(await isAuthed())) redirect("/admin/login");
 
-  const messages: Message[] = await client.fetch(
-    `*[_type == "message"] | order(sentAt desc) { _id, name, email, subject, body, sentAt, read }`
-  );
+  const messages: Message[] = isSanityConfigured
+    ? await client.fetch(
+        `*[_type == "message"] | order(sentAt desc) { _id, name, email, subject, body, sentAt, read }`
+      )
+    : [];
 
   const unread = messages.filter((m) => !m.read).length;
 
@@ -84,9 +88,12 @@ export default async function MessagesPage() {
                     )}
                     <p className="mt-2 whitespace-pre-wrap text-sm text-muted">{msg.body}</p>
                   </div>
-                  <time className="shrink-0 text-xs text-muted">
-                    {msg.sentAt ? formatDate(msg.sentAt) : "—"}
-                  </time>
+                  <div className="flex shrink-0 flex-col items-end gap-2">
+                    <time className="text-xs text-muted">
+                      {msg.sentAt ? formatDate(msg.sentAt) : "—"}
+                    </time>
+                    <DeleteButton id={msg._id} title={msg.subject || `message from ${msg.name}`} />
+                  </div>
                 </div>
               </li>
             ))}

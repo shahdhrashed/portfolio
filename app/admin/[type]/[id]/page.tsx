@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { isAuthed } from "@/lib/admin/auth";
-import { getCategories } from "@/lib/content";
-import { getDocForEdit } from "@/lib/admin/read";
+import { getDocForEdit, getCategoriesFresh } from "@/lib/admin/read";
 import ContentForm from "@/components/admin/ContentForm";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +26,7 @@ export default async function EditorPage({
   const friendly = type as Friendly;
 
   const [categories, doc] = await Promise.all([
-    getCategories(),
+    getCategoriesFresh(),
     id === "new" ? Promise.resolve(null) : getDocForEdit(id),
   ]);
 

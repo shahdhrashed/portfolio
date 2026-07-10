@@ -1,6 +1,9 @@
-import { client } from "@/sanity/client";
+import { writeClient as client } from "@/sanity/writeClient";
 import { isSanityConfigured } from "@/sanity/env";
 import { groq } from "next-sanity";
+import { categoriesQuery } from "@/sanity/queries";
+import { sampleCategories } from "@/lib/sampleData";
+import type { Category } from "@/lib/types";
 
 export interface AdminListItem {
   _id: string;
@@ -48,4 +51,10 @@ const profileEditQuery = groq`
 export async function getProfileForEdit() {
   if (!isSanityConfigured) return null;
   return client.fetch(profileEditQuery, {}, noCache);
+}
+
+/** Uncached category read for admin pages, so a create/edit/delete shows up immediately. */
+export async function getCategoriesFresh(): Promise<Category[]> {
+  if (!isSanityConfigured) return sampleCategories;
+  return client.fetch<Category[]>(categoriesQuery, {}, noCache);
 }
