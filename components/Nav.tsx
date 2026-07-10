@@ -27,33 +27,6 @@ function GridIcon(p: IconProps) {
   );
 }
 
-function VideoIcon(p: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <rect x="2" y="6" width="14" height="12" rx="2" />
-      <path d="M16 10l6-3v10l-6-3" />
-    </svg>
-  );
-}
-
-function PenIcon(p: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M4 20h4L19 9l-4-4L4 16z" />
-      <path d="M14 6l4 4" />
-    </svg>
-  );
-}
-
-function CameraIcon(p: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M3 8a2 2 0 0 1 2-2h1.5L8 4h8l1.5 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <circle cx="12" cy="13" r="3.4" />
-    </svg>
-  );
-}
-
 function UserIcon(p: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
@@ -71,9 +44,6 @@ const links: {
 }[] = [
   { href: "/", label: "Home", Icon: HomeIcon, isActive: (p) => p === "/" },
   { href: "/work", label: "Work", Icon: GridIcon, isActive: (p, t) => p === "/work" && !t },
-  { href: "/work?type=video", label: "Video", Icon: VideoIcon, isActive: (p, t) => p === "/work" && t === "video" },
-  { href: "/work?type=article", label: "Writing", Icon: PenIcon, isActive: (p, t) => p === "/work" && t === "article" },
-  { href: "/work?type=photo", label: "Photo", Icon: CameraIcon, isActive: (p, t) => p === "/work" && t === "photo" },
   { href: "/about", label: "About", Icon: UserIcon, isActive: (p) => p === "/about" },
 ];
 
