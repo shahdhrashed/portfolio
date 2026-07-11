@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import {
+  Inter,
+  Poppins,
+  Montserrat,
+  Work_Sans,
+  DM_Sans,
+  Space_Grotesk,
+  Outfit,
+  Manrope,
+  Playfair_Display,
+  Merriweather,
+  Lora,
+  Source_Serif_4,
+  Libre_Baskerville,
+} from "next/font/google";
 import "./globals.css";
 
 const nunitoSans = localFont({
@@ -47,6 +62,88 @@ const shick = localFont({
   display: "swap",
 });
 
+/**
+ * Selectable font library for the admin "Typography" picker (lib/fonts.ts).
+ * All 15 are loaded for every visitor regardless of which is active —
+ * switching the selection is just a CSS variable swap, no rebuild needed.
+ */
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+});
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+});
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  display: "swap",
+});
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const sourceSerif4 = Source_Serif_4({
+  variable: "--font-source-serif-4",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+const libreBaskerville = Libre_Baskerville({
+  variable: "--font-libre-baskerville",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 const siteName = "Shahd — Portfolio";
 const siteDescription =
   "A mass communication portfolio: video reports, documentaries, written features, and photojournalism.";
@@ -68,7 +165,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${nunitoSans.variable} ${modernline.variable} ${shick.variable}`}
+      className={`${cormorant.variable} ${nunitoSans.variable} ${modernline.variable} ${shick.variable} ${inter.variable} ${poppins.variable} ${montserrat.variable} ${workSans.variable} ${dmSans.variable} ${spaceGrotesk.variable} ${outfit.variable} ${manrope.variable} ${playfairDisplay.variable} ${merriweather.variable} ${lora.variable} ${sourceSerif4.variable} ${libreBaskerville.variable}`}
     >
       <body>{children}</body>
     </html>

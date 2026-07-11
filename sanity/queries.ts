@@ -77,5 +77,11 @@ export const profileQuery = groq`
   socials,
   "navVideo": coalesce(navVideo, true),
   "navWriting": coalesce(navWriting, true),
-  "navPhoto": coalesce(navPhoto, true)
+  "navPhoto": coalesce(navPhoto, true),
+  bodyFont,
+  bodyFontWeight,
+  bodyFontStyle,
+  titleFont,
+  titleFontWeight,
+  titleFontStyle
 }`;

@@ -9,10 +9,12 @@
   --color-accent: #c8154b;
   --color-accent-dark: #9e1038;
 
-  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, sans-serif;
+  /* --font-body-override / --font-heading-override are set inline by app/(site)/layout.tsx
+     from the admin Typography picker, so a font change is a live CSS variable swap. */
+  --font-serif: var(--font-heading-override, var(--font-cormorant)), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-body-override, var(--font-nunito-sans)), ui-sans-serif, system-ui, sans-serif;
   --font-script: var(--font-modernline), cursive;
-  --font-display: var(--font-shick), Georgia, serif;
+  --font-display: var(--font-heading-override, var(--font-shick)), Georgia, serif;
 }
 
 :root {
@@ -27,6 +29,8 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-style: var(--font-body-style, normal);
+  font-weight: var(--font-body-weight, 400);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -39,8 +43,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
+  font-style: var(--font-heading-style, normal);
   color: var(--color-accent);
-  font-weight: 400;
+  font-weight: var(--font-heading-weight, 400);
 }
 
 /* Bottom dock animations */
@@ -82,7 +87,9 @@ h6 {
 
 /* Rendered article body */
 .prose-body {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-style: var(--font-body-style, normal);
+  font-weight: var(--font-body-weight, 400);
   font-size: 1.1875rem;
   line-height: 1.75;
   color: var(--color-ink);
@@ -91,18 +98,20 @@ h6 {
   margin: 0 0 1.4rem;
 }
 .prose-body h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-style: var(--font-heading-style, normal);
   font-size: 2rem;
   line-height: 1.2;
   margin: 2.4rem 0 1rem;
-  font-weight: 700;
+  font-weight: var(--font-heading-weight, 700);
   color: var(--color-accent);
 }
 .prose-body h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-style: var(--font-heading-style, normal);
   font-size: 1.5rem;
   margin: 2rem 0 0.75rem;
-  font-weight: 600;
+  font-weight: var(--font-heading-weight, 600);
   color: var(--color-accent);
 }
 .prose-body blockquote {

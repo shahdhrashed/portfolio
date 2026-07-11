@@ -64,4 +64,10 @@ export interface Profile {
   navVideo?: boolean;
   navWriting?: boolean;
   navPhoto?: boolean;
+  bodyFont?: string;
+  bodyFontWeight?: string;
+  bodyFontStyle?: string;
+  titleFont?: string;
+  titleFontWeight?: string;
+  titleFontStyle?: string;
 }

@@ -67,7 +67,6 @@ export default async function AboutPage() {
 
         {/* Left: text content */}
         <div className="order-2 md:order-1">
-          <p className="text-sm text-muted">Hello, I'm</p>
           <h1 className="mt-1 font-serif text-5xl leading-tight sm:text-6xl">
             {profile.name}
           </h1>

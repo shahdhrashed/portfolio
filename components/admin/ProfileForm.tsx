@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import ImageUploader from "./ImageUploader";
 import RichTextEditor from "./RichTextEditor";
 import type { UploadedImage } from "./uploadImage";
+import {
+  FONT_OPTIONS,
+  FONT_STYLE_OPTIONS,
+  FONT_WEIGHT_OPTIONS,
+  findFontOption,
+  findFontStyleOption,
+  findFontWeightOption,
+} from "@/lib/fonts";
 
 const platforms = ["instagram", "linkedin", "youtube", "x", "email"];
 
@@ -31,9 +39,21 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
   const [navVideo, setNavVideo] = useState(profile?.navVideo ?? true);
   const [navWriting, setNavWriting] = useState(profile?.navWriting ?? true);
   const [navPhoto, setNavPhoto] = useState(profile?.navPhoto ?? true);
+  const [bodyFont, setBodyFont] = useState(profile?.bodyFont ?? "");
+  const [bodyFontWeight, setBodyFontWeight] = useState(profile?.bodyFontWeight ?? "");
+  const [bodyFontStyle, setBodyFontStyle] = useState(profile?.bodyFontStyle ?? "");
+  const [titleFont, setTitleFont] = useState(profile?.titleFont ?? "");
+  const [titleFontWeight, setTitleFontWeight] = useState(profile?.titleFontWeight ?? "");
+  const [titleFontStyle, setTitleFontStyle] = useState(profile?.titleFontStyle ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+  const selectedBodyFont = findFontOption(bodyFont);
+  const selectedTitleFont = findFontOption(titleFont);
+  const selectedBodyWeight = findFontWeightOption(bodyFontWeight);
+  const selectedTitleWeight = findFontWeightOption(titleFontWeight);
+  const selectedBodyStyle = findFontStyleOption(bodyFontStyle);
+  const selectedTitleStyle = findFontStyleOption(titleFontStyle);
 
   const input =
     "w-full rounded-md border border-line bg-white px-3 py-2 outline-none focus:border-accent";
@@ -58,6 +78,12 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         navVideo,
         navWriting,
         navPhoto,
+        bodyFont,
+        bodyFontWeight,
+        bodyFontStyle,
+        titleFont,
+        titleFontWeight,
+        titleFontStyle,
       }),
     });
     if (res.ok) {
@@ -166,6 +192,129 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         >
           + Add link
         </button>
+      </div>
+
+      <div className="border-t border-line pt-5">
+        <label className="mb-2 block text-sm font-medium">Typography</label>
+        <p className="mb-3 text-xs text-muted">
+          Changes apply live on the site as soon as you save — no rebuild needed.
+        </p>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className="space-y-3">
+            <label className="mb-1 block text-xs font-medium text-muted">Body font</label>
+            <select
+              className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+              value={bodyFont}
+              onChange={(e) => setBodyFont(e.target.value)}
+            >
+              <option value="">Default (Nunito Sans)</option>
+              {FONT_OPTIONS.map((f) => (
+                <option key={f.key} value={f.key}>
+                  {f.label}
+                </option>
+              ))}
+            </select>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-medium text-muted">Body weight</label>
+                <select
+                  className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+                  value={bodyFontWeight}
+                  onChange={(e) => setBodyFontWeight(e.target.value)}
+                >
+                  <option value="">Default (Regular)</option>
+                  {FONT_WEIGHT_OPTIONS.map((f) => (
+                    <option key={f.key} value={f.key}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-medium text-muted">Body style</label>
+                <select
+                  className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+                  value={bodyFontStyle}
+                  onChange={(e) => setBodyFontStyle(e.target.value)}
+                >
+                  <option value="">Default (Normal)</option>
+                  {FONT_STYLE_OPTIONS.map((f) => (
+                    <option key={f.key} value={f.key}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <p
+              className="mt-2 rounded-md border border-line bg-paper-dim p-3 text-sm"
+              style={{
+                fontFamily: selectedBodyFont ? `var(${selectedBodyFont.variable})` : undefined,
+                fontStyle: selectedBodyStyle?.value,
+                fontWeight: selectedBodyWeight?.value,
+              }}
+            >
+              The quick brown fox jumps over the lazy dog.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <label className="mb-1 block text-xs font-medium text-muted">Heading font</label>
+            <select
+              className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+              value={titleFont}
+              onChange={(e) => setTitleFont(e.target.value)}
+            >
+              <option value="">Default (Shick)</option>
+              {FONT_OPTIONS.map((f) => (
+                <option key={f.key} value={f.key}>
+                  {f.label}
+                </option>
+              ))}
+            </select>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-medium text-muted">Heading weight</label>
+                <select
+                  className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+                  value={titleFontWeight}
+                  onChange={(e) => setTitleFontWeight(e.target.value)}
+                >
+                  <option value="">Default (Regular)</option>
+                  {FONT_WEIGHT_OPTIONS.map((f) => (
+                    <option key={f.key} value={f.key}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-medium text-muted">Heading style</label>
+                <select
+                  className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm outline-none focus:border-accent"
+                  value={titleFontStyle}
+                  onChange={(e) => setTitleFontStyle(e.target.value)}
+                >
+                  <option value="">Default (Normal)</option>
+                  {FONT_STYLE_OPTIONS.map((f) => (
+                    <option key={f.key} value={f.key}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <p
+              className="mt-2 rounded-md border border-line bg-paper-dim p-3 text-lg text-accent"
+              style={{
+                fontFamily: selectedTitleFont ? `var(${selectedTitleFont.variable})` : undefined,
+                fontStyle: selectedTitleStyle?.value,
+                fontWeight: selectedTitleWeight?.value,
+              }}
+            >
+              The quick brown fox
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="border-t border-line pt-5">

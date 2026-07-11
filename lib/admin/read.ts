@@ -48,7 +48,13 @@ const profileEditQuery = groq`
   "headshot": headshot{ "assetId": asset._ref, "url": asset->url, alt },
   "navVideo": coalesce(navVideo, true),
   "navWriting": coalesce(navWriting, true),
-  "navPhoto": coalesce(navPhoto, true)
+  "navPhoto": coalesce(navPhoto, true),
+  bodyFont,
+  bodyFontWeight,
+  bodyFontStyle,
+  titleFont,
+  titleFontWeight,
+  titleFontStyle
 }`;
 
 export async function getProfileForEdit() {

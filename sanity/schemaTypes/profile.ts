@@ -1,5 +1,39 @@
 import { defineField, defineType } from "sanity";
 
+// Keep in sync with FONT_OPTIONS in lib/fonts.ts.
+const fontChoices = [
+  { title: "Nunito Sans", value: "nunito-sans" },
+  { title: "Inter", value: "inter" },
+  { title: "Poppins", value: "poppins" },
+  { title: "Montserrat", value: "montserrat" },
+  { title: "Work Sans", value: "work-sans" },
+  { title: "DM Sans", value: "dm-sans" },
+  { title: "Space Grotesk", value: "space-grotesk" },
+  { title: "Outfit", value: "outfit" },
+  { title: "Manrope", value: "manrope" },
+  { title: "Cormorant Garamond", value: "cormorant" },
+  { title: "Playfair Display", value: "playfair-display" },
+  { title: "Merriweather", value: "merriweather" },
+  { title: "Lora", value: "lora" },
+  { title: "Source Serif 4", value: "source-serif-4" },
+  { title: "Libre Baskerville", value: "libre-baskerville" },
+];
+
+const fontWeightChoices = [
+  { title: "Light", value: "300" },
+  { title: "Regular", value: "400" },
+  { title: "Medium", value: "500" },
+  { title: "Semi Bold", value: "600" },
+  { title: "Bold", value: "700" },
+  { title: "Extra Bold", value: "800" },
+  { title: "Black", value: "900" },
+];
+
+const fontStyleChoices = [
+  { title: "Normal", value: "normal" },
+  { title: "Italic", value: "italic" },
+];
+
 export const profile = defineType({
   name: "profile",
   title: "Profile / about",
@@ -93,6 +127,42 @@ export const profile = defineType({
       title: "Show \"Photo\" in the bottom nav",
       type: "boolean",
       initialValue: true,
+    }),
+    defineField({
+      name: "bodyFont",
+      title: "Body text font",
+      type: "string",
+      options: { list: fontChoices },
+    }),
+    defineField({
+      name: "bodyFontWeight",
+      title: "Body text weight",
+      type: "string",
+      options: { list: fontWeightChoices },
+    }),
+    defineField({
+      name: "bodyFontStyle",
+      title: "Body text style",
+      type: "string",
+      options: { list: fontStyleChoices },
+    }),
+    defineField({
+      name: "titleFont",
+      title: "Heading font",
+      type: "string",
+      options: { list: fontChoices },
+    }),
+    defineField({
+      name: "titleFontWeight",
+      title: "Heading weight",
+      type: "string",
+      options: { list: fontWeightChoices },
+    }),
+    defineField({
+      name: "titleFontStyle",
+      title: "Heading style",
+      type: "string",
+      options: { list: fontStyleChoices },
     }),
   ],
   preview: { select: { title: "name", subtitle: "headline", media: "headshot" } },

@@ -60,7 +60,7 @@ export default function ContactButton() {
         onClick={() => setOpen(true)}
         className="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-accent-dark"
       >
-        Let's Talk
+        Let&apos;s Talk
       </button>
 
       <AnimatePresence>
@@ -92,8 +92,8 @@ export default function ContactButton() {
               {/* Header */}
               <div className="flex items-start justify-between border-b border-line px-6 py-5">
                 <div>
-                  <h2 className="font-serif text-2xl">Let's Talk</h2>
-                  <p className="mt-0.5 text-sm text-muted">I'll get back to you as soon as I can.</p>
+                  <h2 className="font-serif text-2xl">Let&apos;s Talk</h2>
+                  <p className="mt-0.5 text-sm text-muted">I&apos;ll get back to you as soon as I can.</p>
                 </div>
                 <button
                   onClick={handleClose}
@@ -116,7 +116,7 @@ export default function ContactButton() {
                       </svg>
                     </div>
                     <p className="mt-3 font-semibold text-ink">Message sent!</p>
-                    <p className="mt-1 text-sm text-muted">Thanks for reaching out. I'll be in touch soon.</p>
+                    <p className="mt-1 text-sm text-muted">Thanks for reaching out. I&apos;ll be in touch soon.</p>
                     <button onClick={handleClose} className="mt-5 text-sm font-medium text-accent hover:underline">
                       Close
                     </button>

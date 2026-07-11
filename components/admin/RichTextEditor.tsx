@@ -3,7 +3,18 @@
 import { useRef, useEffect, useState } from "react";
 import { uploadImage } from "./uploadImage";
 
-type Cmd = { label: string; title: string; run: () => void };
+type Cmd = { label: string; title: string; command: string; arg?: string };
+
+const cmds: Cmd[] = [
+  { label: "B", title: "Bold", command: "bold" },
+  { label: "i", title: "Italic", command: "italic" },
+  { label: "H2", title: "Heading", command: "formatBlock", arg: "h2" },
+  { label: "H3", title: "Subheading", command: "formatBlock", arg: "h3" },
+  { label: "\"", title: "Quote", command: "formatBlock", arg: "blockquote" },
+  { label: "*", title: "Bulleted list", command: "insertUnorderedList" },
+  { label: "P", title: "Paragraph", command: "formatBlock", arg: "p" },
+  { label: "Link", title: "Link", command: "createLink" },
+];
 
 export default function RichTextEditor({
   value,
@@ -40,6 +51,14 @@ export default function RichTextEditor({
     if (url) exec("createLink", url);
   }
 
+  function runCommand(cmd: Cmd) {
+    if (cmd.command === "createLink") {
+      addLink();
+      return;
+    }
+    exec(cmd.command, cmd.arg);
+  }
+
   async function insertImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -57,17 +76,6 @@ export default function RichTextEditor({
     }
   }
 
-  const cmds: Cmd[] = [
-    { label: "B", title: "Bold", run: () => exec("bold") },
-    { label: "i", title: "Italic", run: () => exec("italic") },
-    { label: "H2", title: "Heading", run: () => exec("formatBlock", "h2") },
-    { label: "H3", title: "Subheading", run: () => exec("formatBlock", "h3") },
-    { label: "❝", title: "Quote", run: () => exec("formatBlock", "blockquote") },
-    { label: "•", title: "Bulleted list", run: () => exec("insertUnorderedList") },
-    { label: "¶", title: "Paragraph", run: () => exec("formatBlock", "p") },
-    { label: "🔗", title: "Link", run: addLink },
-  ];
-
   return (
     <div>
       <label className="mb-1 block text-sm font-medium">{label}</label>
@@ -79,7 +87,7 @@ export default function RichTextEditor({
               type="button"
               title={c.title}
               onMouseDown={(e) => e.preventDefault()}
-              onClick={c.run}
+              onClick={() => runCommand(c)}
               className="min-w-8 rounded px-2 py-1 text-sm hover:bg-paper-dim"
             >
               {c.label}
@@ -93,7 +101,7 @@ export default function RichTextEditor({
             disabled={uploading}
             className="rounded px-2 py-1 text-sm hover:bg-paper-dim disabled:opacity-60"
           >
-            {uploading ? "…" : "🖼"}
+            {uploading ? "..." : "Image"}
           </button>
         </div>
         <div
