@@ -36,20 +36,66 @@ function UserIcon(p: IconProps) {
   );
 }
 
-const links: {
+function VideoIcon(p: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <rect x="2" y="6" width="14" height="12" rx="2" />
+      <path d="M16 10l6-3v10l-6-3" />
+    </svg>
+  );
+}
+
+function PenIcon(p: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M4 20h4L19 9l-4-4L4 16z" />
+      <path d="M14 6l4 4" />
+    </svg>
+  );
+}
+
+function CameraIcon(p: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M3 8a2 2 0 0 1 2-2h1.5L8 4h8l1.5 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <circle cx="12" cy="13" r="3.4" />
+    </svg>
+  );
+}
+
+type NavLink = {
   href: string;
   label: string;
   Icon: (p: IconProps) => React.ReactElement;
   isActive: (pathname: string, type: string | null) => boolean;
-}[] = [
-  { href: "/", label: "Home", Icon: HomeIcon, isActive: (p) => p === "/" },
-  { href: "/work", label: "Work", Icon: GridIcon, isActive: (p, t) => p === "/work" && !t },
-  { href: "/about", label: "About", Icon: UserIcon, isActive: (p) => p === "/about" },
-];
+};
+
+export interface NavFlags {
+  showVideo?: boolean;
+  showWriting?: boolean;
+  showPhoto?: boolean;
+}
+
+function buildLinks({ showVideo = true, showWriting = true, showPhoto = true }: NavFlags): NavLink[] {
+  return [
+    { href: "/", label: "Home", Icon: HomeIcon, isActive: (p) => p === "/" },
+    { href: "/work", label: "Work", Icon: GridIcon, isActive: (p, t) => p === "/work" && !t },
+    ...(showVideo
+      ? [{ href: "/work?type=video", label: "Video", Icon: VideoIcon, isActive: (p: string, t: string | null) => p === "/work" && t === "video" }]
+      : []),
+    ...(showWriting
+      ? [{ href: "/work?type=article", label: "Writing", Icon: PenIcon, isActive: (p: string, t: string | null) => p === "/work" && t === "article" }]
+      : []),
+    ...(showPhoto
+      ? [{ href: "/work?type=photo", label: "Photo", Icon: CameraIcon, isActive: (p: string, t: string | null) => p === "/work" && t === "photo" }]
+      : []),
+    { href: "/about", label: "About", Icon: UserIcon, isActive: (p) => p === "/about" },
+  ];
+}
 
 const PILL_SPRING = { type: "spring", stiffness: 500, damping: 40, mass: 0.8 } as const;
 
-function DockLinks() {
+function DockLinks({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
   const type = useSearchParams().get("type");
 
@@ -94,7 +140,7 @@ function DockLinks() {
   );
 }
 
-function DockLinksFallback() {
+function DockLinksFallback({ links }: { links: NavLink[] }) {
   return (
     <>
       {links.map(({ href, label, Icon }) => (
@@ -112,22 +158,23 @@ function DockLinksFallback() {
   );
 }
 
-function Dock() {
+function Dock({ flags }: { flags: NavFlags }) {
+  const links = buildLinks(flags);
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
       <nav
         aria-label="Primary"
         className="dock-rise pointer-events-auto will-change-transform flex items-center gap-1 rounded-full border border-white/50 bg-paper/55 px-2 py-2 shadow-[0_10px_34px_-8px_rgba(34,26,6,0.45)] backdrop-blur-xl backdrop-saturate-150"
       >
-        <Suspense fallback={<DockLinksFallback />}>
-          <DockLinks />
+        <Suspense fallback={<DockLinksFallback links={links} />}>
+          <DockLinks links={links} />
         </Suspense>
       </nav>
     </div>
   );
 }
 
-export default function Nav() {
+export default function Nav({ showVideo, showWriting, showPhoto }: NavFlags) {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-sm">
@@ -148,7 +195,7 @@ export default function Nav() {
         </div>
       </header>
 
-      <Dock />
+      <Dock flags={{ showVideo, showWriting, showPhoto }} />
     </>
   );
 }

@@ -163,4 +163,7 @@ export const sampleProfile: Profile = {
     { platform: "linkedin", url: "https://linkedin.com" },
     { platform: "youtube", url: "https://youtube.com" },
   ],
+  navVideo: true,
+  navWriting: true,
+  navPhoto: true,
 };

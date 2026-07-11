@@ -76,6 +76,24 @@ export const profile = defineType({
         },
       ],
     }),
+    defineField({
+      name: "navVideo",
+      title: "Show \"Video\" in the bottom nav",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "navWriting",
+      title: "Show \"Writing\" in the bottom nav",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "navPhoto",
+      title: "Show \"Photo\" in the bottom nav",
+      type: "boolean",
+      initialValue: true,
+    }),
   ],
   preview: { select: { title: "name", subtitle: "headline", media: "headshot" } },
 });

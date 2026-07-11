@@ -10,7 +10,11 @@ export default async function SiteLayout({
   const profile = await getProfile();
   return (
     <div className="flex min-h-screen flex-col">
-      <Nav />
+      <Nav
+        showVideo={profile.navVideo}
+        showWriting={profile.navWriting}
+        showPhoto={profile.navPhoto}
+      />
       <main className="flex-1">{children}</main>
       <Footer profile={profile} />
       {/* Spacer so the floating bottom dock never overlaps footer content */}

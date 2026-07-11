@@ -40,6 +40,9 @@ export async function POST(req: Request) {
       cvUrl: data.cvUrl || undefined,
       headshot,
       socials,
+      navVideo: Boolean(data.navVideo),
+      navWriting: Boolean(data.navWriting),
+      navPhoto: Boolean(data.navPhoto),
     });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);

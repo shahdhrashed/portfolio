@@ -61,4 +61,7 @@ export interface Profile {
   email?: string;
   cvUrl?: string;
   socials: SocialLink[];
+  navVideo?: boolean;
+  navWriting?: boolean;
+  navPhoto?: boolean;
 }

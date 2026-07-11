@@ -45,7 +45,10 @@ export async function getDocForEdit(id: string) {
 const profileEditQuery = groq`
 *[_id == "profile"][0]{
   name, headline, shortBio, bioHtml, email, cvUrl, socials,
-  "headshot": headshot{ "assetId": asset._ref, "url": asset->url, alt }
+  "headshot": headshot{ "assetId": asset._ref, "url": asset->url, alt },
+  "navVideo": coalesce(navVideo, true),
+  "navWriting": coalesce(navWriting, true),
+  "navPhoto": coalesce(navPhoto, true)
 }`;
 
 export async function getProfileForEdit() {

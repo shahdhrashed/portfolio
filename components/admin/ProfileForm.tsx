@@ -28,6 +28,9 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
   const [socials, setSocials] = useState<Social[]>(
     profile?.socials?.length ? profile.socials : [{ platform: "instagram", url: "" }]
   );
+  const [navVideo, setNavVideo] = useState(profile?.navVideo ?? true);
+  const [navWriting, setNavWriting] = useState(profile?.navWriting ?? true);
+  const [navPhoto, setNavPhoto] = useState(profile?.navPhoto ?? true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
@@ -52,6 +55,9 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         cvUrl,
         headshot: headshot ? { assetId: headshot.assetId } : undefined,
         socials,
+        navVideo,
+        navWriting,
+        navPhoto,
       }),
     });
     if (res.ok) {
@@ -160,6 +166,36 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         >
           + Add link
         </button>
+      </div>
+
+      <div className="border-t border-line pt-5">
+        <label className="mb-2 block text-sm font-medium">Bottom nav</label>
+        <div className="flex flex-wrap gap-4">
+          <label className="flex items-center gap-2 text-sm text-muted">
+            <input
+              type="checkbox"
+              checked={navVideo}
+              onChange={(e) => setNavVideo(e.target.checked)}
+            />
+            Video
+          </label>
+          <label className="flex items-center gap-2 text-sm text-muted">
+            <input
+              type="checkbox"
+              checked={navWriting}
+              onChange={(e) => setNavWriting(e.target.checked)}
+            />
+            Writing
+          </label>
+          <label className="flex items-center gap-2 text-sm text-muted">
+            <input
+              type="checkbox"
+              checked={navPhoto}
+              onChange={(e) => setNavPhoto(e.target.checked)}
+            />
+            Photo
+          </label>
+        </div>
       </div>
 
       {error && <p className="text-sm text-accent">{error}</p>}

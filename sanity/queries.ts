@@ -74,5 +74,8 @@ export const profileQuery = groq`
   headshot,
   email,
   cvUrl,
-  socials
+  socials,
+  "navVideo": coalesce(navVideo, true),
+  "navWriting": coalesce(navWriting, true),
+  "navPhoto": coalesce(navPhoto, true)
 }`;
