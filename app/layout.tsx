@@ -144,12 +144,12 @@ const libreBaskerville = Libre_Baskerville({
   display: "swap",
 });
 
-const siteName = "Shahd — Portfolio";
+const siteName = "Shahd Rashed";
 const siteDescription =
   "A mass communication portfolio: video reports, documentaries, written features, and photojournalism.";
 
 export const metadata: Metadata = {
-  title: { default: siteName, template: "%s — Shahd" },
+  title: { default: siteName, template: siteName },
   description: siteDescription,
   openGraph: {
     title: siteName,
