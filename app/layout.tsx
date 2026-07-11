@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const nunitoSans = localFont({
+  src: [
+    { path: "./fonts/NunitoSans-ExtraLight.ttf", weight: "200", style: "normal" },
+    { path: "./fonts/NunitoSans-ExtraLightItalic.ttf", weight: "200", style: "italic" },
+    { path: "./fonts/NunitoSans-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/NunitoSans-LightItalic.ttf", weight: "300", style: "italic" },
+    { path: "./fonts/NunitoSans-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/NunitoSans-Italic.ttf", weight: "400", style: "italic" },
+    { path: "./fonts/NunitoSans-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/NunitoSans-SemiBoldItalic.ttf", weight: "600", style: "italic" },
+    { path: "./fonts/NunitoSans-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/NunitoSans-BoldItalic.ttf", weight: "700", style: "italic" },
+    { path: "./fonts/NunitoSans-ExtraBold.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/NunitoSans-ExtraBoldItalic.ttf", weight: "800", style: "italic" },
+    { path: "./fonts/NunitoSans-Black.ttf", weight: "900", style: "normal" },
+    { path: "./fonts/NunitoSans-BlackItalic.ttf", weight: "900", style: "italic" },
+  ],
+  variable: "--font-nunito-sans",
   display: "swap",
 });
 
@@ -54,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} ${modernline.variable} ${shick.variable}`}
+      className={`${cormorant.variable} ${nunitoSans.variable} ${modernline.variable} ${shick.variable}`}
     >
       <body>{children}</body>
     </html>

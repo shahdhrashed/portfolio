@@ -10,7 +10,7 @@
   --color-accent-dark: #9e1038;
 
   --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, sans-serif;
   --font-script: var(--font-modernline), cursive;
   --font-display: var(--font-shick), Georgia, serif;
 }
