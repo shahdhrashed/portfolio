@@ -22,42 +22,22 @@ export default async function Icon() {
           background: "transparent",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span
-            style={{
-              fontFamily: "Modernline",
-              fontSize: 22,
-              fontWeight: 700,
-              color: "#c8154b",
-              lineHeight: 1,
-            }}
-          >
-            S
-          </span>
-          <span
-            style={{
-              fontFamily: "Modernline",
-              fontSize: 22,
-              fontWeight: 700,
-              color: "#c8154b",
-              marginLeft: "-0.42em",
-              lineHeight: 1,
-            }}
-          >
-            H
-          </span>
-          <span
-            style={{
-              fontFamily: "Modernline",
-              fontSize: 22,
-              fontWeight: 700,
-              color: "#c8154b",
-              marginLeft: "-0.15em",
-              lineHeight: 1,
-            }}
-          >
-            R.
-          </span>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            color: "#c8154b",
+            fontFamily: "Modernline",
+            fontSize: 15,
+            fontWeight: 700,
+            lineHeight: 1,
+            transform: "translateX(4px)",
+            WebkitTextStroke: "0.45px currentColor",
+          }}
+        >
+          <span style={{ display: "block" }}>S</span>
+          <span style={{ display: "block", marginLeft: "-0.42em" }}>H</span>
+          <span style={{ display: "block", marginLeft: "-0.15em" }}>R.</span>
         </div>
       </div>
     ),
