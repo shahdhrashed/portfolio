@@ -5,12 +5,14 @@ import { imageUrl } from "@/sanity/image";
 import { parseVideo } from "@/lib/video";
 import { formatDate, typeLabels, typeHref } from "@/lib/format";
 
+// Cards render at aspect-[16/10] — request a matching box so any stored
+// hotspot/crop is honored instead of falling back to a blind center-crop.
 function coverFor(item: WorkItem): string | undefined {
-  const fromCover = imageUrl(item.coverImage, { width: 800 });
+  const fromCover = imageUrl(item.coverImage, { width: 800, height: 500 });
   if (fromCover) return fromCover;
   if (item.type === "video") return parseVideo(item.videoUrl).thumbnail ?? undefined;
   if (item.type === "photo" && item.gallery?.length)
-    return imageUrl(item.gallery[0], { width: 800 });
+    return imageUrl(item.gallery[0], { width: 800, height: 500 });
   return undefined;
 }
 

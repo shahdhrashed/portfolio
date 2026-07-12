@@ -33,8 +33,8 @@ const editQuery = groq`
   _id, "type": _type, title, "slug": slug.current, excerpt, date, featured,
   "categoryId": category._ref,
   videoUrl, duration, description, bodyHtml,
-  "coverImage": coverImage{ "assetId": asset._ref, "url": asset->url, alt },
-  "gallery": gallery[]{ "assetId": asset._ref, "url": asset->url, alt, caption }
+  "coverImage": coverImage{ "assetId": asset._ref, "url": asset->url, alt, crop, hotspot },
+  "gallery": gallery[]{ "assetId": asset._ref, "url": asset->url, alt, caption, crop, hotspot }
 }`;
 
 export async function getDocForEdit(id: string) {
@@ -45,7 +45,7 @@ export async function getDocForEdit(id: string) {
 const profileEditQuery = groq`
 *[_id == "profile"][0]{
   name, headline, shortBio, bioHtml, email, cvUrl, socials,
-  "headshot": headshot{ "assetId": asset._ref, "url": asset->url, alt },
+  "headshot": headshot{ "assetId": asset._ref, "url": asset->url, alt, crop, hotspot },
   "navVideo": coalesce(navVideo, true),
   "navWriting": coalesce(navWriting, true),
   "navPhoto": coalesce(navPhoto, true),

@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const profile = await getProfile();
-  const headshot = imageUrl(profile.headshot, { width: 700 });
+  const headshot = imageUrl(profile.headshot, { width: 700, height: 933 });
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 sm:py-24">

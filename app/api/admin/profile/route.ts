@@ -18,6 +18,8 @@ export async function POST(req: Request) {
         _type: "image",
         asset: { _type: "reference", _ref: data.headshot.assetId },
         ...(data.headshot.alt ? { alt: data.headshot.alt } : {}),
+        ...(data.headshot.crop ? { crop: data.headshot.crop } : {}),
+        ...(data.headshot.hotspot ? { hotspot: data.headshot.hotspot } : {}),
       }
     : undefined;
 

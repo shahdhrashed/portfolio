@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ImageUploader from "./ImageUploader";
+import ImageCropModal from "./ImageCropModal";
 import RichTextEditor from "./RichTextEditor";
 import { uploadImage, type UploadedImage } from "./uploadImage";
 import type { Category } from "@/lib/types";
+
+const GALLERY_ASPECT = 3 / 2;
 
 type Friendly = "video" | "article" | "photo";
 const docTypeOf: Record<Friendly, string> = {
@@ -51,6 +54,10 @@ export default function ContentForm({
   const [bodyHtml, setBodyHtml] = useState(doc?.bodyHtml ?? "");
   // photo
   const [gallery, setGallery] = useState<GalleryItem[]>(doc?.gallery ?? []);
+  const [galleryQueue, setGalleryQueue] = useState<File[]>([]);
+  const [queueIndex, setQueueIndex] = useState(0);
+  const [galleryCropSrc, setGalleryCropSrc] = useState<string | null>(null);
+  const [recropIndex, setRecropIndex] = useState<number | null>(null);
   const [galleryBusy, setGalleryBusy] = useState(false);
 
   const [saving, setSaving] = useState(false);
@@ -59,17 +66,63 @@ export default function ContentForm({
   const input =
     "w-full rounded-md border border-line bg-white px-3 py-2 outline-none focus:border-accent";
 
-  async function addGalleryFiles(files: FileList | null) {
+  function addGalleryFiles(files: FileList | null) {
     if (!files?.length) return;
+    const arr = Array.from(files);
+    setGalleryQueue(arr);
+    setQueueIndex(0);
+    setGalleryCropSrc(URL.createObjectURL(arr[0]));
+  }
+
+  function openGalleryRecrop(i: number) {
+    setRecropIndex(i);
+    setGalleryCropSrc(gallery[i].url);
+  }
+
+  function closeGalleryCrop() {
+    if (recropIndex === null && galleryCropSrc) URL.revokeObjectURL(galleryCropSrc);
+    setGalleryCropSrc(null);
+    setRecropIndex(null);
+    setGalleryQueue([]);
+    setQueueIndex(0);
+  }
+
+  function advanceGalleryQueue() {
+    if (galleryCropSrc) URL.revokeObjectURL(galleryCropSrc);
+    const next = queueIndex + 1;
+    if (next < galleryQueue.length) {
+      setQueueIndex(next);
+      setGalleryCropSrc(URL.createObjectURL(galleryQueue[next]));
+    } else {
+      setGalleryQueue([]);
+      setQueueIndex(0);
+      setGalleryCropSrc(null);
+    }
+  }
+
+  async function handleGalleryCropConfirm({
+    crop,
+    hotspot,
+  }: {
+    crop: NonNullable<GalleryItem["crop"]>;
+    hotspot: NonNullable<GalleryItem["hotspot"]>;
+  }) {
+    if (recropIndex !== null) {
+      const i = recropIndex;
+      setGallery((arr) => arr.map((g, gi) => (gi === i ? { ...g, crop, hotspot } : g)));
+      setGalleryCropSrc(null);
+      setRecropIndex(null);
+      return;
+    }
+    const file = galleryQueue[queueIndex];
     setGalleryBusy(true);
     try {
-      const uploaded: GalleryItem[] = [];
-      for (const file of Array.from(files)) {
-        uploaded.push(await uploadImage(file));
-      }
-      setGallery((g) => [...g, ...uploaded]);
+      const uploaded = await uploadImage(file);
+      setGallery((g) => [...g, { ...uploaded, crop, hotspot }]);
+      advanceGalleryQueue();
     } catch {
       setError("One or more images failed to upload.");
+      closeGalleryCrop();
     } finally {
       setGalleryBusy(false);
     }
@@ -93,7 +146,9 @@ export default function ContentForm({
       date,
       featured,
       categoryId: categoryId || undefined,
-      coverImage: cover ? { assetId: cover.assetId } : undefined,
+      coverImage: cover
+        ? { assetId: cover.assetId, crop: cover.crop, hotspot: cover.hotspot }
+        : undefined,
       videoUrl,
       duration,
       description,
@@ -101,6 +156,8 @@ export default function ContentForm({
       gallery: gallery.map((g) => ({
         assetId: g.assetId,
         caption: g.caption,
+        crop: g.crop,
+        hotspot: g.hotspot,
       })),
     };
     const res = await fetch("/api/admin/content", {
@@ -183,7 +240,16 @@ export default function ContentForm({
             {gallery.map((g, i) => (
               <div key={g.assetId} className="rounded-md border border-line p-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={g.url} alt="" className="aspect-[3/2] w-full rounded object-cover" />
+                <img
+                  src={g.url}
+                  alt=""
+                  style={{
+                    objectPosition: g.hotspot
+                      ? `${g.hotspot.x * 100}% ${g.hotspot.y * 100}%`
+                      : "50% 50%",
+                  }}
+                  className="aspect-[3/2] w-full rounded object-cover"
+                />
                 <input
                   className="mt-2 w-full rounded border border-line px-2 py-1 text-xs"
                   placeholder="Caption"
@@ -196,18 +262,27 @@ export default function ContentForm({
                     )
                   }
                 />
-                <button
-                  type="button"
-                  onClick={() => setGallery((arr) => arr.filter((_, xi) => xi !== i))}
-                  className="mt-1 text-xs text-muted hover:text-accent"
-                >
-                  Remove
-                </button>
+                <div className="mt-1 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => openGalleryRecrop(i)}
+                    className="text-xs text-muted hover:text-accent"
+                  >
+                    Recrop
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGallery((arr) => arr.filter((_, xi) => xi !== i))}
+                    className="text-xs text-muted hover:text-accent"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             ))}
           </div>
           <label className="mt-3 inline-block cursor-pointer rounded-full border border-line px-4 py-2 text-sm hover:border-accent hover:text-accent">
-            {galleryBusy ? "Uploading…" : "+ Add photos"}
+            + Add photos
             <input
               type="file"
               accept="image/*"
@@ -216,6 +291,22 @@ export default function ContentForm({
               onChange={(e) => addGalleryFiles(e.target.files)}
             />
           </label>
+
+          <ImageCropModal
+            src={galleryCropSrc}
+            aspect={GALLERY_ASPECT}
+            title={
+              recropIndex !== null
+                ? "Recrop photo"
+                : `Photo ${queueIndex + 1} of ${galleryQueue.length}`
+            }
+            initialCrop={recropIndex !== null ? gallery[recropIndex]?.crop : undefined}
+            onCancel={closeGalleryCrop}
+            onSkip={recropIndex === null ? advanceGalleryQueue : undefined}
+            onConfirm={handleGalleryCropConfirm}
+            confirmLabel={recropIndex !== null ? "Save crop" : "Use this photo"}
+            busy={galleryBusy}
+          />
         </div>
       )}
 
@@ -223,6 +314,7 @@ export default function ContentForm({
         <ImageUploader
           value={cover}
           onChange={setCover}
+          aspect={16 / 10}
           label={friendly === "video" ? "Cover image (optional — falls back to video thumbnail)" : "Cover image"}
         />
       )}
@@ -230,6 +322,7 @@ export default function ContentForm({
         <ImageUploader
           value={cover}
           onChange={setCover}
+          aspect={16 / 10}
           label="Cover image (optional — falls back to first photo)"
         />
       )}

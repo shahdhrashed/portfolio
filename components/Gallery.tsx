@@ -34,7 +34,7 @@ export default function Gallery({ images }: { images: SanityImage[] }) {
     <>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {images.map((img, i) => {
-          const url = imageUrl(img, { width: 1000 });
+          const url = imageUrl(img, { width: 1000, height: 667 });
           if (!url) return null;
           return (
             <figure key={i} className="m-0">

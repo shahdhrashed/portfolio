@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { isAuthed } from "@/lib/admin/auth";
 import { writeClient, hasWriteToken } from "@/sanity/writeClient";
 import { slugify } from "@/lib/admin/slug";
+import type { ImageCrop, ImageHotspot } from "@/lib/types";
 
 const sectionOf: Record<string, string> = {
   videoWork: "video",
@@ -10,7 +11,13 @@ const sectionOf: Record<string, string> = {
   photoStory: "photo",
 };
 
-type ImageInput = { assetId?: string; alt?: string; caption?: string };
+type ImageInput = {
+  assetId?: string;
+  alt?: string;
+  caption?: string;
+  crop?: ImageCrop;
+  hotspot?: ImageHotspot;
+};
 
 function imageField(img?: ImageInput) {
   if (!img?.assetId) return undefined;
@@ -19,6 +26,8 @@ function imageField(img?: ImageInput) {
     asset: { _type: "reference", _ref: img.assetId },
     ...(img.alt ? { alt: img.alt } : {}),
     ...(img.caption ? { caption: img.caption } : {}),
+    ...(img.crop ? { crop: img.crop } : {}),
+    ...(img.hotspot ? { hotspot: img.hotspot } : {}),
   };
 }
 

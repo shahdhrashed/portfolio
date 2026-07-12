@@ -1,6 +1,10 @@
+import type { ImageCrop, ImageHotspot } from "@/lib/types";
+
 export interface UploadedImage {
   assetId: string;
   url: string;
+  crop?: ImageCrop;
+  hotspot?: ImageHotspot;
 }
 
 export async function uploadImage(file: File): Promise<UploadedImage> {

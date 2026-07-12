@@ -73,7 +73,9 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         bioHtml,
         email,
         cvUrl,
-        headshot: headshot ? { assetId: headshot.assetId } : undefined,
+        headshot: headshot
+          ? { assetId: headshot.assetId, crop: headshot.crop, hotspot: headshot.hotspot }
+          : undefined,
         socials,
         navVideo,
         navWriting,
@@ -113,7 +115,7 @@ export default function ProfileForm({ profile }: { profile: any | null }) {
         </div>
       </div>
 
-      <ImageUploader value={headshot} onChange={setHeadshot} label="Photo" />
+      <ImageUploader value={headshot} onChange={setHeadshot} label="Photo" aspect={3 / 4} />
 
       <div>
         <label className="mb-1 block text-sm font-medium">

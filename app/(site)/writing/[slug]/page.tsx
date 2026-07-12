@@ -33,7 +33,9 @@ export default async function ArticlePage({
   if (!article) notFound();
 
   const related = await getRelated(article);
-  const cover = imageUrl(article.coverImage, { width: 1400 });
+  // Hero renders at aspect-[16/9] — a different box than the 16/10 work
+  // card, but the same stored hotspot serves both accurately.
+  const cover = imageUrl(article.coverImage, { width: 1400, height: 788 });
 
   return (
     <article>

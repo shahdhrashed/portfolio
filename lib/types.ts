@@ -1,11 +1,29 @@
 export type WorkType = "video" | "article" | "photo";
 
+/** Fractional edge trims (0..1) marking the region of the source image to use. */
+export interface ImageCrop {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
+/** Fractional focal point + size (0..1), concentric with ImageCrop by construction. */
+export interface ImageHotspot {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface SanityImage {
   asset?: { _ref?: string; url?: string };
   alt?: string;
   // Fallback for sample data (plain URL string)
   url?: string;
   caption?: string;
+  crop?: ImageCrop;
+  hotspot?: ImageHotspot;
 }
 
 export interface Category {
